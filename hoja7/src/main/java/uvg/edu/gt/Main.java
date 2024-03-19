@@ -27,11 +27,12 @@ public class Main {
         try {
             Scanner archivo = new Scanner(new File(rutaAbsolutaDiccionario));
             while (archivo.hasNextLine()) {
-                String linea = archivo.nextLine();
-                String[] partes = linea.substring(1, linea.length() - 1).split(" ");
+                String linea = archivo.nextLine().trim(); // Elimina espacios en blanco al inicio y final
+                // Elimina los paréntesis y divide por la coma
+                String[] partes = linea.substring(1, linea.length() - 1).split(",");
                 if (partes.length >= 2) {
-                    String ingles = partes[0].toLowerCase(); // Convertir a minúsculas para la consistencia
-                    String espanol = partes[1];
+                    String ingles = partes[0].trim().toLowerCase(); // Elimina espacios y convierte a minúsculas
+                    String espanol = partes[1].trim();
                     diccionario.insert(ingles, espanol);
                 }
             }
@@ -51,9 +52,6 @@ public class Main {
                 String palabraOriginal = archivoTexto.next();
                 // Conservamos la palabra original para añadir los signos de puntuación luego de la traducción
                 String palabraParaBuscar = palabraOriginal.toLowerCase().replaceAll("[^a-zA-Z]", ""); // Limpiar palabra
-    
-                // Depuración: Imprimir la palabra buscada
-                System.out.println("Buscando: " + palabraParaBuscar);
                 
                 String traduccion = diccionario.search(palabraParaBuscar);
                 

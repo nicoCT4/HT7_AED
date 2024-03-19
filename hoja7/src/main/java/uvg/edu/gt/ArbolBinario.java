@@ -55,11 +55,12 @@ public class ArbolBinario<K extends Comparable<K>, V> {
     private void inOrderRec(Nodo node) {
         if (node != null) {
             inOrderRec(node.left);
-            // Modifica esta línea para imprimir la asociación con el formato deseado.
-            System.out.println("(" + node.Asociacion.getKey() + node.Asociacion.getValue() + ")");
+            // Asegúrate de incluir una coma y un espacio entre la palabra en inglés y la traducción al español
+            System.out.println("(" + node.Asociacion.getKey() + ", " + node.Asociacion.getValue() + ")");
             inOrderRec(node.right);
         }
-    }   
+    }
+    
 
     // Método público para buscar un valor asociado a una clave
     public V search(K key) {
