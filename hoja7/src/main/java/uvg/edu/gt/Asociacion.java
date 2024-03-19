@@ -31,9 +31,5 @@ public class Asociacion<K, V> {
     }
 
     // Método toString para representar la asociación como una cadena de texto
-    @Override
-    public String toString() {
-        return "(" + key + " - " + value + ")";
-    }
 }
 
