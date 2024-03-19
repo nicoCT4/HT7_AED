@@ -4,6 +4,7 @@ public class ArbolBinario<K extends Comparable<K>, V> {
 
     private Nodo root;
 
+    // Clase interna que representa un nodo en el árbol
     private class Nodo {
         Asociacion<K, V> Asociacion;
         Nodo left;
@@ -16,6 +17,7 @@ public class ArbolBinario<K extends Comparable<K>, V> {
         }
     }
 
+    // Constructor que inicializa la raíz del árbol
     public ArbolBinario() {
         root = null;
     }

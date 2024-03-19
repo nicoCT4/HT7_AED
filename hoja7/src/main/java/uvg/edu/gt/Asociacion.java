@@ -29,7 +29,5 @@ public class Asociacion<K, V> {
     public void setValue(V value) {
         this.value = value;
     }
-
-    // Método toString para representar la asociación como una cadena de texto
 }
 

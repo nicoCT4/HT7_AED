@@ -1,18 +1,27 @@
 package uvg.edu.gt;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Clase principal que ejecuta la lógica para traducir un texto del inglés al español
+ * utilizando un diccionario cargado desde un archivo.
+ */
 public class Main {
 
+    /**
+     * Punto de entrada principal del programa.
+     * 
+     * @param args Argumentos de línea de comando (no utilizados).
+     */
     public static void main(String[] args) {
         ArbolBinario<String, String> diccionario = new ArbolBinario<>();
     
+        // Rutas absolutas a los archivos diccionario y texto.
         String rutaAbsolutaDiccionario = "C:\\Users\\nicol\\OneDrive\\Documents\\UVG\\Tercer Semestre\\Algoritmos y Estructura de Datos\\HT7_AED\\HT7_AED\\hoja7\\src\\main\\java\\uvg\\edu\\gt\\diccionario.txt";
-        String rutaAbsolutaTexto = "C:\\\\Users\\\\n" + //
-                        "icol\\\\OneDrive\\\\Documents\\\\UVG\\\\Tercer Semestre\\\\Algoritmos y Estructura de Datos\\\\HT7_AED\\\\HT7_AED\\\\hoja7\\\\src\\\\main\\\\java\\\\uvg\\\\edu\\\\gt\\\\texto.txt";
+        String rutaAbsolutaTexto = "C:\\\\Users\\\\n" + 
+                                "icol\\\\OneDrive\\\\Documents\\\\UVG\\\\Tercer Semestre\\\\Algoritmos y Estructura de Datos\\\\HT7_AED\\\\HT7_AED\\\\hoja7\\\\src\\\\main\\\\java\\\\uvg\\\\edu\\\\gt\\\\texto.txt";
     
         cargarDiccionario(diccionario, rutaAbsolutaDiccionario);
         diccionario.inOrder();
@@ -22,16 +31,20 @@ public class Main {
         System.out.println(textoTraducido);
     }
     
-
+    /**
+     * Carga el diccionario de traducciones de inglés a español desde un archivo.
+     * 
+     * @param diccionario El árbol binario donde se almacenarán las traducciones.
+     * @param rutaAbsolutaDiccionario La ruta absoluta al archivo de diccionario.
+     */
     private static void cargarDiccionario(ArbolBinario<String, String> diccionario, String rutaAbsolutaDiccionario) {
         try {
             Scanner archivo = new Scanner(new File(rutaAbsolutaDiccionario));
             while (archivo.hasNextLine()) {
-                String linea = archivo.nextLine().trim(); // Elimina espacios en blanco al inicio y final
-                // Elimina los paréntesis y divide por la coma
+                String linea = archivo.nextLine().trim();
                 String[] partes = linea.substring(1, linea.length() - 1).split(",");
                 if (partes.length >= 2) {
-                    String ingles = partes[0].trim().toLowerCase(); // Elimina espacios y convierte a minúsculas
+                    String ingles = partes[0].trim().toLowerCase();
                     String espanol = partes[1].trim();
                     diccionario.insert(ingles, espanol);
                 }
@@ -42,7 +55,14 @@ public class Main {
         }
     }
     
-    
+    /**
+     * Traduce un texto del inglés al español utilizando el diccionario proporcionado.
+     * Las palabras no encontradas se marcan con asteriscos.
+     * 
+     * @param diccionario El árbol binario que contiene las traducciones.
+     * @param rutaAbsolutaTexto La ruta absoluta al archivo de texto a traducir.
+     * @return El texto traducido.
+     */
     private static String traducirTexto(ArbolBinario<String, String> diccionario, String rutaAbsolutaTexto) {
         StringBuilder textoTraducido = new StringBuilder();
         try {
@@ -50,22 +70,17 @@ public class Main {
             
             while (archivoTexto.hasNext()) {
                 String palabraOriginal = archivoTexto.next();
-                // Conservamos la palabra original para añadir los signos de puntuación luego de la traducción
-                String palabraParaBuscar = palabraOriginal.toLowerCase().replaceAll("[^a-zA-Z]", ""); // Limpiar palabra
-                
+                String palabraParaBuscar = palabraOriginal.toLowerCase().replaceAll("[^a-zA-Z]", "");
                 String traduccion = diccionario.search(palabraParaBuscar);
                 
                 if (traduccion != null) {
-                    // Palabra encontrada y traducida
                     textoTraducido.append(traduccion);
                 } else {
-                    // Palabra no encontrada, se mantiene la original con asteriscos
                     textoTraducido.append("*").append(palabraOriginal).append("*");
                 }
     
-                // Manejo de signos de puntuación y espacios
                 String signosPuntuacion = palabraOriginal.replaceAll("[a-zA-Z]", "");
-                textoTraducido.append(signosPuntuacion).append(" "); // Añadir signos de puntuación al final y espacio
+                textoTraducido.append(signosPuntuacion).append(" ");
             }
             
             archivoTexto.close();
@@ -74,8 +89,6 @@ public class Main {
             return null;
         }
         
-        return textoTraducido.toString().trim(); // Eliminar espacio extra al final
+        return textoTraducido.toString().trim();
     }
-    
 }
-
